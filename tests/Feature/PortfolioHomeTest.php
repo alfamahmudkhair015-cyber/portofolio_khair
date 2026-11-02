@@ -11,13 +11,11 @@ class PortfolioHomeTest extends TestCase
         $response = $this->get('/');
 
         $response->assertOk()
-            ->assertSee('<span>CURIOUS BY</span>', false)
-            ->assertSee('<span>NATURE.</span>', false)
-            ->assertSee('<em>BUILT THROUGH</em>', false)
-            ->assertSee('<em>CODE.</em>', false)
-            ->assertSee('Informatics student at')
+            ->assertSee('I Build')
+            ->assertSee('Fast, Modern &')
+            ->assertSee('Scalable Web Apps')
+            ->assertSee('Saya Alfa Mahmud Khair, mahasiswa semester 4')
             ->assertSee('Universitas Teknokrat Indonesia')
-            ->assertSee('mahasiswa semester 4')
             ->assertSee('Projects Completed')
             ->assertSee('Flutter')
             ->assertSee('My Journey')

@@ -7,49 +7,7 @@
 @endphp
 
 {{-- HERO --}}
-<section class="hero" id="home">
-    <div class="wrap hero__grid">
-        <div class="hero__text">
-            <p class="hello reveal">Hi, I'm <b>{{ $c['full_name'] }}</b></p>
-
-            <h1 class="hero__title reveal" style="--d:.08s">
-                <span>CURIOUS BY</span>
-                <span>NATURE.</span>
-                <em>BUILT THROUGH</em>
-                <em>CODE.</em>
-            </h1>
-
-            <p class="hero__lead reveal" style="--d:.16s">
-                Informatics student at <b>{{ $c['campus'] }}</b> crafting digital experiences through code, design, and a deep sense of curiosity.
-            </p>
-
-            <div class="cta reveal" style="--d:.24s">
-                <a href="#projects" class="btn btn--lime">View My Projects <svg class="ico"><use href="#i-arrow"/></svg></a>
-                <a href="#about" class="btn btn--text">About Me <span class="round"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
-            </div>
-
-            <a href="#about" class="scroll-down reveal" style="--d:.32s" aria-label="Scroll ke bawah"><i></i> Scroll Down</a>
-        </div>
-
-        <div class="hero__art reveal" style="--d:.12s">
-            <div class="ring ring--front" aria-hidden="true"></div>
-            <div class="ring" aria-hidden="true"></div>
-            <span class="note" aria-hidden="true">Better<br>Code<br>Bigger<br>Dreams</span>
-            <svg class="spark spark--1" aria-hidden="true"><use href="#i-spark"/></svg>
-            <svg class="spark spark--2" aria-hidden="true"><use href="#i-spark"/></svg>
-
-            <figure class="avatar">
-                <img src="{{ asset($c['photo']) }}" alt="Foto {{ $c['full_name'] }}" width="640" height="800" fetchpriority="high">
-            </figure>
-
-            <div class="badge">
-                <small>INFORMATICS</small>
-                <b>STUDENT</b>
-                <small>{{ $c['campus_short'] }}</small>
-            </div>
-        </div>
-    </div>
-</section>
+@include('portofolio.partials.hero')
 
 {{-- MARQUEE --}}
 <div class="marquee" aria-hidden="true">
@@ -65,7 +23,7 @@
 {{-- ABOUT --}}
 <section class="section" id="about" aria-labelledby="about-title">
     <div class="wrap">
-        <div class="panel about reveal">
+        <div class="panel about reveal grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div class="about__text">
                 <p class="tag"><i></i> 01 &nbsp;ABOUT ME</p>
                 <h2 id="about-title" class="h2">A bit about me</h2>
@@ -112,7 +70,7 @@
             @endif
         </header>
 
-        <div class="projects">
+        <div class="projects grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($c['projects'] as $p)
                 <article class="pcard reveal" style="--d: {{ $loop->index * .08 }}s">
                     <div class="pcard__visual">
@@ -146,7 +104,7 @@
             <h2 id="skills-title" class="h2">My Skills</h2>
             <p class="sec-sub">Tools dan teknologi yang biasa saya gunakan dalam mengembangkan project.</p>
 
-            <ul class="skills">
+             <ul class="skills grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"> 
                 @foreach ($c['skills'] as $s)
                     <li>
                         <img src="https://cdn.simpleicons.org/{{ $s['slug'] }}/{{ $s['color'] }}" alt="" width="34" height="34" loading="lazy" onerror="this.style.visibility='hidden'">
@@ -167,7 +125,7 @@
                 <h2 id="exp-title" class="h2">My Journey</h2>
                 <p class="sec-sub">Pengalaman dan kegiatan yang membentuk saya menjadi pribadi yang lebih baik.</p>
 
-                <ol class="timeline">
+                <ol class="timeline grid grid-cols-1 gap-6 md:grid-cols-2">
                     @foreach ($c['journey'] as $j)
                         <li>
                             <span class="timeline__dot"></span>
@@ -200,7 +158,7 @@
 <section class="section section--tight" id="contact" aria-labelledby="contact-title"
          data-focus="{{ ($errors->any() || session('success')) ? '1' : '0' }}">
     <div class="wrap">
-        <div class="panel contact reveal">
+       <div class="panel contact reveal grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div class="contact__info">
                 <p class="tag"><i></i> 05 &nbsp;GET IN TOUCH</p>
                 <h2 id="contact-title" class="h2">Let's Work Together</h2>
@@ -228,7 +186,7 @@
                 <span class="sr-only" id="copy-status" role="status" aria-live="polite"></span>
             </div>
 
-            <form action="{{ route('contact.store') }}" method="POST" class="form" id="contact-form" novalidate>
+            <form action="{{ route('contact.store') }}" method="POST" class="form grid grid-cols-1 gap-4" id="contact-form" novalidate>
                 @csrf
 
                 @if (session('success'))
