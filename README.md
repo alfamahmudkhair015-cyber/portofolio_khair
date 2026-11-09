@@ -1,6 +1,6 @@
-# Portofolio Khair — Tailwind Setup
+# Portofolio Khair — Tailwind + Landing Page
 
-Branch ini hanya berisi **setup Tailwind CSS 4 di Laravel 12** (lewat Vite). Belum ada landing page maupun fitur backend.
+Branch ini berisi **setup Tailwind CSS 4 + landing page portofolio** (Hero, About, Projects, Skills, Experience, Contact). Belum ada database: form kontak baru divalidasi, belum disimpan.
 
 ## Cara menjalankan
 
@@ -14,7 +14,7 @@ npm run dev          # terminal 1
 php artisan serve    # terminal 2
 ```
 
-Buka http://127.0.0.1:8000 — kartu gelap dengan tombol biru menandakan Tailwind sudah jalan.
+Buka http://127.0.0.1:8000 untuk melihat landing page. Isi profil, proyek, dan statistik diubah lewat `config/portfolio.php`.
 
 ## File penting
 
@@ -24,6 +24,10 @@ Buka http://127.0.0.1:8000 — kartu gelap dengan tombol biru menandakan Tailwin
 | `resources/css/app.css` | `@import 'tailwindcss';` dan `@theme` |
 | `resources/js/app.js` | Entry JavaScript |
 | `resources/views/welcome.blade.php` | Halaman uji Tailwind (`@vite`) |
+| `resources/views/portofolio/home.blade.php` | Landing page |
+| `resources/views/layouts/portfolio.blade.php` | Layout landing page |
+| `config/portfolio.php` | Data profil & proyek |
+| `public/css`, `public/js` | Gaya dan efek landing page |
 
 ## Branch lain
 
