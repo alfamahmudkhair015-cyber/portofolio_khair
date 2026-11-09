@@ -3,13 +3,13 @@
     $hasCv = !empty($c['cv']) && file_exists(public_path($c['cv']));
 @endphp
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', $c['full_name'] . ' | Informatics Student & Developer')</title>
     <meta name="description" content="Portofolio {{ $c['full_name'] }}, mahasiswa Informatika {{ $c['campus'] }}. Membangun aplikasi mobile, website, dan game.">
-    <meta name="theme-color" content="#070908">
+    <meta name="theme-color" content="#050b18">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ $c['full_name'] }} | Developer Portofolio">
     <meta property="og:description" content="Curious by nature. Built through code.">
@@ -20,11 +20,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
-    <script>document.documentElement.classList.add('js');</script>
+    
+    <script>
+        (() => {
+            const root = document.documentElement;
+
+            try {
+                const savedTheme = localStorage.getItem('alfa-portfolio-theme');
+                root.setAttribute(
+                    'data-theme',
+                    savedTheme === 'light' ? 'light' : 'dark'
+                );
+            } catch (error) {
+                root.setAttribute('data-theme', 'dark');
+            }
+
+            root.classList.add('js');
+        })();
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/portfolio.css') }}">
     <link rel="stylesheet" href="{{ asset('css/effects.css') }}">
     <link rel="stylesheet" href="{{ asset('css/hero-futuristic.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme-futuristic.css') }}">
 </head>
 <body>
     <canvas id="bg" aria-hidden="true"></canvas>
@@ -70,6 +89,26 @@
         </nav>
 
         <div class="nav__right">
+            
+            <button
+                type="button"
+                class="theme-toggle"
+                id="theme-toggle"
+                aria-label="Aktifkan mode terang"
+                aria-pressed="false"
+                title="Ganti tema"
+            >
+                <span class="theme-toggle__icon theme-toggle__sun" aria-hidden="true">
+                    ☀
+                </span>
+
+                <span class="theme-toggle__icon theme-toggle__moon" aria-hidden="true">
+                    ☾
+                </span>
+
+                <span class="theme-toggle__thumb" aria-hidden="true"></span>
+            </button>
+
             @if (!empty($c['github']))
                 <a href="{{ $c['github'] }}" target="_blank" rel="noopener" class="round" aria-label="GitHub"><svg class="ico"><use href="#i-github"/></svg></a>
             @endif

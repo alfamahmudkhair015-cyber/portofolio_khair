@@ -2,6 +2,67 @@
     const $ = (s, r = document) => r.querySelector(s);
     const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
+    // Theme system: Dark Mode / Light Mode
+    const root = document.documentElement;
+    const themeToggle = $("#theme-toggle");
+
+    const getSavedTheme = () => {
+        try {
+            return localStorage.getItem("alfa-portfolio-theme");
+        } catch (error) {
+            return null;
+        }
+    };
+
+    const applyTheme = (theme) => {
+        const selectedTheme = theme === "light" ? "light" : "dark";
+
+        root.setAttribute("data-theme", selectedTheme);
+
+        if (themeToggle) {
+            const isLight = selectedTheme === "light";
+
+            themeToggle.setAttribute(
+                "aria-label",
+                isLight ? "Aktifkan mode gelap" : "Aktifkan mode terang"
+            );
+
+            themeToggle.setAttribute("aria-pressed", String(isLight));
+
+            themeToggle.setAttribute(
+                "title",
+                isLight ? "Ganti ke Dark Mode" : "Ganti ke Light Mode"
+            );
+        }
+
+        try {
+            localStorage.setItem("alfa-portfolio-theme", selectedTheme);
+        } catch (error) {
+            // Tema tetap bisa digunakan meskipun penyimpanan tidak tersedia.
+        }
+
+        const themeColor = document.querySelector('meta[name="theme-color"]');
+
+        if (themeColor) {
+            themeColor.setAttribute(
+                "content",
+                selectedTheme === "light" ? "#f3f8ff" : "#050b18"
+            );
+        }
+    };
+
+    // Terapkan tema tersimpan
+    applyTheme(getSavedTheme() || "dark");
+
+    // Tombol pergantian tema
+    if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+            const currentTheme = root.getAttribute("data-theme");
+            applyTheme(currentTheme === "dark" ? "light" : "dark");
+        });
+    }
+
+
     // Loader
     const loader = $("#loader");
     window.addEventListener("load", () =>
@@ -123,7 +184,7 @@
                 let ok = false;
                 try {
                     ok = document.execCommand("copy");
-                } catch (_) {}
+                } catch (_) { }
                 t.remove();
                 done(ok);
             }
