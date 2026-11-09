@@ -1,6 +1,6 @@
-# Portofolio Khair — Backend: Setup Laravel
+# Portofolio Khair — Backend: Laravel & Database
 
-Branch ini berisi **instalasi dan struktur dasar Laravel 12**: routing, controller, layout Blade, dan test. Belum memakai database.
+Branch ini menambahkan **database** di atas setup Laravel: migration, model Eloquent, seeder, daftar proyek dari DB, dan form kontak yang tersimpan.
 
 ## Cara menjalankan
 
@@ -8,22 +8,34 @@ Branch ini berisi **instalasi dan struktur dasar Laravel 12**: routing, controll
 composer install
 cp .env.example .env
 php artisan key:generate
+touch database/database.sqlite
+php artisan migrate --seed      # buat tabel + isi 4 proyek contoh
+npm install && npm run build    # asset Tailwind untuk halaman
 php artisan serve
 ```
 
-Buka http://127.0.0.1:8000. Jalankan test dengan `php artisan test`.
+Untuk MySQL, ubah `DB_CONNECTION=mysql` dan isi `DB_HOST`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` di `.env`.
 
-## Struktur
+## Database
 
-| Lokasi | Fungsi |
+| Tabel | Kolom |
 | --- | --- |
-| `routes/web.php` | Daftar route (`/`, `/about`, `/contact`) |
-| `app/Http/Controllers/PageController.php` | Mengembalikan view tiap halaman |
-| `resources/views/layouts/app.blade.php` | Layout + navigasi |
-| `resources/views/pages/` | Halaman Home, About, Contact |
-| `tests/Feature/PageTest.php` | Memastikan semua halaman terbuka |
+| `projects` | `title`, `description`, `tech_stack`, `demo_url`, `github_url`, timestamps |
+| `contact_messages` | `name`, `email`, `message`, timestamps |
+
+## Route
+
+| Method | URL | Fungsi |
+| --- | --- | --- |
+| GET | `/` | Beranda + 3 proyek terbaru |
+| GET | `/about` | Tentang |
+| GET | `/projects` | Semua proyek (dari DB) |
+| GET | `/projects/{id}` | Detail proyek |
+| GET | `/contact` | Form kontak |
+| POST | `/contact` | Validasi + simpan ke `contact_messages` |
+
+Data profil diatur di `config/profile.php`. Jalankan test: `php artisan test`.
 
 ## Branch berikutnya
 
-- `feature/backend-laravel-db` — migration, model, seeder, form kontak tersimpan ke DB
-- `feature/backend-laravel-db-api` — REST API (`/api/projects`, `/api/contact-messages`)
+- `feature/backend-laravel-db-api` — REST API untuk proyek dan pesan kontak
